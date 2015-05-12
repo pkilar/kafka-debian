@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     configure)
-        update-rc.d kafka defaults || :
+        systemctl daemon-reload || :
         chown -R kafka: /var/log/kafka /var/lib/kafka
         ;;
     abort-upgrade|abort-remove|abort-deconfigure)

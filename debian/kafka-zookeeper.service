@@ -1,0 +1,11 @@
+[Unit]
+Description=Zookeeper Service for Kafka
+After=network.target localfs.target
+
+[Service]
+User=kafka
+ExecStart=/usr/lib/kafka/bin/zookeeper-server-start.sh /etc/kafka/zookeeper.properties
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multiuser.target

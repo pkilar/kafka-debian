@@ -3,23 +3,10 @@
 %:
 	dh $@
 
-SLF4J_VERSION = 1.7.7
-SLF4J = slf4j-$(SLF4J_VERSION)
-
-override_dh_auto_build:
-	./gradlew jar
-# download slf4j-simple JAR library needed for
-# bin/kafka-console-consumer.sh script to work
-	curl --fail --show-error --location \
-	    --output $(SLF4J).tar.gz \
-	    'http://www.slf4j.org/dist/$(SLF4J).tar.gz'
-	tar xf $(SLF4J).tar.gz
-	install -m 644 $(SLF4J)/slf4j-simple-$(SLF4J_VERSION).jar \
-	    core/build/dependant-libs-2.8.0/
-	rm -rf $(SLF4J) $(SLF4J).tar.gz
-
 # Do not install init script automatically
 override_dh_installinit:
+
+override_dh_installdocs:
 
 DESTDIR = debian/kafka
 DMN_DESTDIR = debian/kafka-daemon
@@ -48,6 +35,7 @@ override_dh_auto_install:
 	sed -i 's#/tmp/zookeeper#/var/lib/kafka/zookeeper#' $(DESTDIR)/etc/kafka/zookeeper.properties
 	sed -i 's#/tmp/kafka-logs#/var/lib/kafka/logs#' $(DESTDIR)/etc/kafka/server.properties
 	install -m 755 -d $(DESTDIR)/var/lib/kafka $(DESTDIR)/var/log/kafka
-# install init script manually
-	install -m 755 -d $(DMN_DESTDIR)/etc/init.d
-	install -m 755 debian/init $(DMN_DESTDIR)/etc/init.d/kafka
+# install systemd scripts manually
+	install -m 755 -d $(DMN_DESTDIR)/lib/systemd/system
+	install -m 644 debian/kafka.service $(DMN_DESTDIR)/lib/systemd/system
+	install -m 644 debian/kafka-zookeeper.service $(DMN_DESTDIR)/lib/systemd/system

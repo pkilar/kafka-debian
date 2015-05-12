@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
     purge)
-        update-rc.d kafka remove || :
+        systemctl daemon-reload || :
         ;;
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
         ;;

@@ -1,3 +1,10 @@
+kafka (0.8.2.1-1) unstable; urgency=low
+
+  * version bump to 0.8.2.1
+  * systemd startup scripts
+
+ -- Paul Kilar <paul.kilar@mezocliq.com>  Mon, 11 May 2015 17:42:00 -0500
+
 kafka (0.8.1.1-5) unstable; urgency=low
 
   * include slf4j-simple JAR in the binary package;

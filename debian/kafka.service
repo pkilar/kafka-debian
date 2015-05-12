@@ -1,0 +1,13 @@
+[Unit]
+Description=Kafka Messaging Service
+After=network.target localfs.target kafka-zookeeper.service
+Requires=kafka-zookeeper.service
+
+[Service]
+User=kafka
+EnvironmentFile=-/etc/default/kafka
+ExecStart=/usr/lib/kafka/bin/kafka-server-start.sh /etc/kafka/server.properties
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multiuser.target
